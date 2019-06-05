@@ -20,7 +20,12 @@ app.use(bodyParser.urlencoded({
 app.use(cors())
 
 const wiki = require('./wiki')(app),
-  bt = require('./bt')(app)
+  lynda = require('./lynda')(app)
+  bt = require('./bt')(app),
+  cstm = require('./cstm')(app),
+	tv = require('./tv')(app),
+  mv = require('./mv')(app),
+  grabber = require('./grabber')(app)
 
 router.use((req, res, next) => {
   next()
@@ -36,7 +41,8 @@ app.use('/', router)
 
 // START THE SERVER
 // =============================================================================
-app.listen(port)
+var server = app.listen(port)
+server.timeout = 1000 * 60 * 30
 console.log('Environmental variables: ', process.env)
 console.log('Graphics server running on port ' + port)
-console.log('====================================')
+console.log('=====================================')
