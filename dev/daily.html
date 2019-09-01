@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>torrent downloads</title>
+	<style>
+body {
+	font-family: Helvetica, Arial, 'Sans-Serif';
+	font-size: 12px;
+	line-height: 1.6em;
+	margin: 0;
+	padding: 0;
+}
+a {
+	color: #06c;
+	display: inline-block;
+	text-decoration: none;
+}
+a[target=imdb],
+a[target=episodes],
+a[target=wiki] {
+	width: 15em;
+}
+strong {
+	display: block;
+	margin-bottom: .5em;
+}
+h1 {
+	font-size: 2em;
+	text-transform: uppercase;
+}
+.column {
+	display: inline-block;
+	margin-right: 1em;
+	min-width: 15em;
+	padding-left: 2em;
+	vertical-align: top;
+}
+.inline {
+	display: inline;
+}
+.list {
+	margin-bottom: 2em;
+	padding-left: 2em;
+}
+
+.list > li {
+	padding: .2em .5em .2em .2em;
+	white-space: nowrap;
+}
+.list > li:nth-child(odd) {
+	background-color: #fcc;
+}
+
+.g {
+	color: #090;
+}
+
+.r {
+	color: #f00;
+}
+
+.y {
+	color: #f66;
+}
+	</style>
+	<script src="movies.js"></script>
+	<script>
+		const make = (i) => '<a target="' + i.type +'" href="' + i.src + '">' + i.type + '</a>'
+
+		const checker = (str) => {
+			let today = new Date(),
+				tmp = new Date(str)
+			
+			if (isNaN(tmp.getTime())) {
+				return false
+			} else {
+				return (today.getTime() > tmp.getTime())
+			}
+		}
+		
+		const weekly = [
+			{
+				"day": "Sunday",
+				"shows": [
+				]
+			},
+			{
+				"day": "Monday",
+				"shows": [
+					{
+						"title": "Last Week Tonight",
+						"episodes": "https://en.wikipedia.org/wiki/List_of_Last_Week_Tonight_with_John_Oliver_episodes#References",
+						"first": "2018-02-12",
+						"next": "2018-02-12",
+						"downloads": [
+							{
+								"type": "720p",
+								"src": "https://rarbg.to/torrents.php?search=last+week+tonight+720p"
+							}
+						]
+					},
+					{
+						"title": "Star Trek: Discovery",
+						"episodes": "https://en.wikipedia.org/wiki/Star_Trek:_Discovery#Production",
+						"first": "2019-01-17",
+						"next": "2019-04-18",
+						"downloads": [
+							{
+								"type": "1080p",
+								"src": "https://rarbg.to/torrents.php?search=star+trek+discovery+rartv+1080p+web+aac2"
+							}
+						]
+					},
+					{
+						"title": "Silicon Valley",
+						"episodes": "http://en.wikipedia.org/wiki/List_of_Silicon_Valley_episodes#References",
+						"first": "2019-10-27",
+						"next": "2019-10-27",
+						"downloads": [
+							{
+								"type": "AMZN",
+								"src": "https://rarbg.to/torrents.php?search=silicon+valley+amzn+720p+webrip"
+							}
+						]
+					},
+				]
+			},
+			{
+				"day": "Tuesday",
+				"shows": [
+				]
+			},
+			{
+				"day": "Wednesday",
+				"shows": [
+				{
+						"title": "Brooklyn Nine-Nine",
+						"episodes": "http://en.wikipedia.org/wiki/List_of_Brooklyn_Nine-Nine_episodes#References",
+						"first": "2020-01-27",
+						"next": "2020-01-27",
+						"downloads": [
+							{
+								"type": "720p",
+								"src": "https://rarbg.to/torrents.php?search=brooklyn+nine+rartv+720p"
+							}
+						]
+					},
+					{
+						"title": "The Mandalorian",
+						"episodes": "https://en.wikipedia.org/wiki/The_Mandalorian#Production",
+						"first": "2019-11-12",
+						"next": "2019-11-12",
+						"downloads": [
+							{
+								"type": "1080p",
+								"src": "https://rarbg.to/torrents.php?search=mandalorian+rartv+1080p"
+							}
+						]
+					}
+				]
+			},
+			{
+				"day": "Thursday",
+				"shows": [
+					{
+						"title": "Marvel Week",
+						"episodes": "https://torrentz2.eu/search?f=marvel+week"
+					},
+					{
+						"title": "Windows Weekly",
+						"episodes": "http://twit.tv/ww"
+					},
+					{
+						"title": "Mr. Robot",
+						"episodes": "https://en.wikipedia.org/wiki/List_of_Mr._Robot_episodes#Specials",
+						"first": "2019-10-06",
+						"next": "2019-10-06",
+						"downloads": [
+							{
+								"type": "1080p",
+								"src": "https://rarbg.to/torrents.php?search=mr+robot+1080p+amzn"
+							}
+						]
+					}
+				]
+			},
+			{
+				"day": "Friday",
+				"shows": [
+					{
+						"title": "Mom",
+						"episodes": "https://en.wikipedia.org/wiki/List_of_Mom_(TV_series)_episodes#References",
+						"first": "2019-09-26",
+						"next": "2019-09-26",
+						"downloads": [
+							{
+								"type": "720p",
+								"src": "https://rarbg.to/torrents.php?search=mom+rartv+720p"
+							}
+						]
+					},
+					{
+						"title": "The Orville",
+						"episodes": "https://en.wikipedia.org/wiki/The_Orville#Production",
+						"first": "2020-10-01",
+						"next": "2020-10-01",
+						"downloads": [
+							{
+								"type": "WEB",
+								"src": "https://rarbg.to/torrents.php?search=orville+web+x264"
+							}
+						]
+					}
+				]
+			},
+			{
+				"day": "Saturday",
+				"shows": [
+					{
+						"title": "Agents of SHIELD",
+						"episodes": "https://en.wikipedia.org/wiki/List_of_Agents_of_S.H.I.E.L.D._episodes#References",
+						"first": "2020-05-01",
+						"next": "2020-05-01",
+						"downloads": [
+							{
+								"type": "720p",
+								"src": "https://rarbg.to/torrents.php?search=agents+rartv+720p"
+							}
+						]
+					},
+					{
+						"title": "Real Time with Bill Maher",
+						"episodes": "http://en.wikipedia.org/wiki/List_of_Real_Time_with_Bill_Maher_episodes_(2017)",
+						"first": "2018-01-20",
+						"next": "2018-01-20",
+						"downloads": [
+							{
+								"type": "720p",
+								"src": "https://rarbg.to/torrents.php?search=real+time+with+bill+maher+720p"
+							}
+						]
+					}
+				]
+			}
+		]
+
+		const binge = [
+			{
+				"title": "",
+				"link": "",
+				"src": ""
+			}
+		]
+	</script>
+</head>
+<body>
+	<div class="column">
+		<h1>Weekly</h1>
+			<script>
+				let tvHTML = '';
+				
+				for (let d=0; d<weekly.length; d++) {
+					let date = weekly[d]
+					
+					if (date.shows.length > 0) {
+						tvHTML += '<strong>' + date.day + '</strong><ul class="list">'
+				
+						for (let s=0; s<date.shows.length; s++) {
+							let show = date.shows[s],
+								downloads = show.downloads,
+								target = "episodes"
+							
+							if (show.title === "Marvel Week") {
+								target = "wwt"
+							} else if (show.title === "Windows Weekly") {
+								target = "_blank"
+							}
+					
+							tvHTML += '<li><a target="' + target + '" class="' + (show.first ? (checker(show.first) ? 'g' : 'r') : '') + '" href="' + show.episodes + '">' + show.title + '</a>'
+					
+							if (show.first) {
+								tvHTML += '<span class="' + (checker(show.first) && !checker(show.next) ? "g" : "r") + '">' + show.next + '</span> → '
+							}
+
+							if (downloads && downloads.length > 0) {						
+								for (let l=0; l<downloads.length; l++) {
+									let e = downloads[l]
+									tvHTML += ((l > 0) ? ' | ' : '' ) + make(e)
+								}							
+							}
+					
+							tvHTML += '</li>'
+						}
+				
+						tvHTML += '</ul>'
+					}
+				}
+				
+				document.write(tvHTML)
+			</script>
+		</ul>
+	</div>
+	<div class="column">
+		<h1>Movies</h1>
+		<ul class="list">
+			<li>
+				<a target="_blank" href="https://yts.ag/browse-movies">YTS</a> | 
+				<a target="_blank" href="https://yifysubtitles.com/">YIFY Subtitles</a>
+			</li>
+		</ul>
+		<ul class="list">
+<script>
+	let moveHTML = ''
+	
+	for (let m=0; m<movies.length; m++) {
+		let movie = movies[m]
+		moveHTML += '<li><a target="imdb" href="http://www.imdb.com/title/tt' + movie.id + '/">' + movie.title + '</a><span>' + movie.date + '</span></li>'
+	}
+	
+	document.write(moveHTML)
+</script>
+		</ul>
+		<h1>Binge</h1>
+		<ul class="list">
+			<li>
+				<a class="g" target="wiki" href="https://en.wikipedia.org/wiki/The_Punisher_(TV_series)">The Punisher</a>
+				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+web+rartv+punisher">1080p</a>
+			</li>
+		</ul>
+		<h1>TV</h1>
+		<ul class="list">
+			<li>
+				<a target="torrentz" href="https://torrentz2.eu/search?f=web+720p+aac+x264">720p web aac</a>
+			</li>
+			<li>
+				<a target="rarbg" href="https://rarbg.to/torrents.php?category%5B%5D=18&category%5B%5D=41&category%5B%5D=49&search=1080p+rarbg">1080p TV</a> | 
+				<a target="rarbg" href="https://rarbg.to/torrents.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=42&category%5B%5D=46&search=1080p+rarbg">1080p movies</a>
+			</li>
+		</ul>
+		<h1>Training</h1>
+		<ul class="list">
+			<li><a target="_blank" href="https://freecoursesite.com/">FreeCourseWeb.com</a></li>
+			<li><a target="_blank" href="https://freecoursesonline.me/">FreeCoursesOnline.me</a></li>
+			<li><a target="_blank" href="https://freecourseweb.com/">Free Course Site</a></li>
+			<li><a target="_blank" href="https://nulledpremium.com/">NulledPremium.com</a></li>
+		</ul>
+		<ul class="list">
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=lynda">Lynda</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=pluralsight ">Pluralsight</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=tutsplus">Tutsplus</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=teamtreehouse">TeamTreehouse</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=udemy">udemy</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=udacity">udacity</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=skillshare">SkillShare</a></li>
+			<li><a target="torrentz" href="https://torrentz2.eu/searchA?f=infinite+skills">Infinite Skills</a></li>
+		</ul>
+	</div>
+	<div class="column">
+		<h1>Books</h1>
+		<ul class="list">
+			<li>
+				<a target="books" href="https://torrentz2.eu/searchA?f=ebook+best+sellers">Best Sellers</a> | 
+				<a target="books" href="https://torrentz2.eu/searchA?f=ebook+mobi+azw3">Non-fiction:mobi</a>
+			</li>
+			<li>
+				<a target="comics" href="https://worldwidetorrents.to/torrents.php?cat=132">Comic books</a> | 
+				<a target="comics" href="https://getcomics.info/?s=tpb">TPBs</a> | 
+			</li>
+		</ul>
+		<h1>Magazine</h1>
+		<ul class="list">
+			<li>
+				<a target="mmg" href="https://torrentz2.eu/search?f=assorted+magazines">Assorted Magazines</a>
+			</li>
+		</ul>
+		<strong>Apple</strong>
+		<ul class="list">
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=apple+magazine">Apple Magazine</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=macworld">MacWorld</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=maclife">MacLife</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=macformat">MacFormat</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=ipad+iphone+user">iPad and iPhone User</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=iCreate">iCreate</a></li>
+		</ul>
+		<strong>PC</strong>
+		<ul class="list">
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=maximum+pc">Maximum PC</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=pcworld">PCWorld</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=pc+magazine">PC Magazine</a></li>
+		</ul>
+		<strong>Design</strong>
+		<ul class="list">
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=computer+arts">Computer Arts</a></li>
+		</ul>
+		<strong>Gadgets</strong>
+		<ul class="list">
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=stuff+uk">Stuff</a></li>
+			<li><a target="mag" href="https://torrentz2.eu/searchA?f=t3+uk">T3 Magazine</a></li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -40,23 +40,6 @@ var tv = [
 		]
 	},
 	{
-		"title":"iZombie",
-		"path":"List_of_iZombie_episodes",
-		"anchor":"Ratings",
-		"downloads":[
-			"https://rarbg.to/torrents.php?search=izombie+720p"
-		]
-	},
-	{
-		"title":"Legion",
-		"path":"Legion_(TV_series)",
-		"anchor":"Production",
-		"downloads":[
-			"https://rarbg.to/torrents.php?search=legion+720p",
-			"https://rarbg.to/torrents.php?search=legion+1080p+amzn"
-		]
-	},
-	{
 		"title":"Doom Patrol",
 		"path":"Doom_Patrol_(TV_series)",
 		"anchor":"Production",
@@ -105,14 +88,6 @@ var tv = [
 		"anchor":"References",
 		"downloads":[
 			"https://rarbg.to/torrents.php?search=real+time+with+bill+maher+720p"
-		]
-	},
-	{
-		"title":"Swamp Thing",
-		"path":"Swamp_Thing_(2019_TV_series)",
-		"anchor":"Production",
-		"downloads":[
-			"https://rarbg.to/torrents.php?search=swamp+thing+dcu+1080p"
 		]
 	},
 	{

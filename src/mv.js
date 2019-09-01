@@ -7,71 +7,11 @@ var request = require('request'),
 
 var mv = [
 	{
-		"title": "Shazam!",
-		"id": "0448115"
-	},
-	{
-		"title": "X-Men: Dark Phoenix",
-		"id": "6565702"
-	},
-	{
-		"title": "Chaos Walking",
-		"id": "2076822"
-	},
-	{
-		"title": "Dumbo",
-		"id": "3861390"
-	},
-	{
-		"title": "The Voyage of Doctor Dolittle",
-		"id": "6673612"
-	},
-	{
-		"title": "Avengers 4",
-		"id": "4154796"
-	},
-	{
-		"title": "John Wick 3",
-		"id": "6146586"
-	},
-	{
-		"title": "Aladdin",
-		"id": "6139732"
-	},
-	// {
-	// 	"title": "Minecraft",
-	// 	"id": "3566834"
-	// },
-	{
-		"title": "Toy Story 4",
-		"id": "1979376"
-	},
-	{
-		"title": "Spider-Man Homecoming 2",
-		"id": "6320628"
-	},
-	{
-		"title": "The Lion King",
-		"id": "6105098"
-	},
-	{
-		"title": "The New Mutants",
-		"id": "4682266"
-	},
-	{
-		"title": "Bond 25",
-		"id": "2382320"
-	},
-	{
-		"title": "Wonder Woman 2",
-		"id": "7126948"
-	},
-	{
-		"title": "Terminator 6",
+		"title": "Terminator: Dark Fate",
 		"id": "6450804"
 	},
 	{
-		"title": "Frozen 2",
+		"title": "Frozen II",
 		"id": "4520988"
 	},
 	{
@@ -79,12 +19,68 @@ var mv = [
 		"id": "2527338"
 	},
 	{
+		"title": "The Voyage of Doctor Dolittle",
+		"id": "6673612"
+	},
+	{
+		"title": "Godzilla vs. Kong",
+		"id": "5034838"
+	},
+	{
 		"title": "Mulan",
 		"id": "4566758"
 	},
 	{
-		"title": "Top Gun 2",
+		"title": "Bond 25",
+		"id": "2382320"
+	},
+	{
+		"title": "Onward",
+		"id": "7146812"
+	},
+	{
+		"title": "Black Widow",
+		"id": "3480822"
+	},
+	{
+		"title": "Wonder Woman 1984",
+		"id": "7126948"
+	},
+	{
+		"title": "Ghostbusters 2020",
+		"id": "4513678"
+	},
+	{
+		"title": "Top Gun: Maverick",
 		"id": "1745960"
+	},
+	{
+		"title": "Monster Hunter",
+		"id": "6475714"
+	},
+	{
+		"title": "Eternals",
+		"id": "9032400"
+	},
+	{
+		"title": "Shang-Chi and the Legend of the Ten Rings",
+		"id": "9376612"
+	},
+	{
+		"title": "Doctor Strange in the Multiverse of Madness",
+		"id": "9419884"
+	},
+	{
+		"title": "Thor: Love and Thunder",
+		"id": "10648342"
+	},
+	{
+		"title": "Dune",
+		"id": "1160419"
+	},
+	{
+		"title": "Avatar 2",
+		"id": "1630029"
 	}
 ]
 

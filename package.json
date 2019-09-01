@@ -5,10 +5,10 @@
   "main": "dev/main.js",
   "scripts": {
     "start": "webpack && node dev/main.js",
-		"stop": "killall node",
-		"tv": "curl http://localhost:10001/tv",
-		"mv": "curl http://localhost:10001/mv",
-		"get": "npm run tv && npm run mv",
+    "stop": "killall node",
+    "tv": "curl http://localhost:10001/tv",
+    "mv": "curl http://localhost:10001/mv",
+    "get": "npm run tv && npm run mv",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stone",
