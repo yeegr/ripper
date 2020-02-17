@@ -1,27 +1,10 @@
-var request = require('request'),
+const async = require('async'),
+	{ JSDOM } = require('jsdom'),
 	fs = require('fs'),
-	async = require('async'),
 	moment = require('moment'),
-	_ = require('lodash'),
-  $ = require('jquery')(require("jsdom").jsdom().defaultView)
+	_ = require('lodash')
 
 var mv = [
-	{
-		"title": "Terminator: Dark Fate",
-		"id": "6450804"
-	},
-	{
-		"title": "Frozen II",
-		"id": "4520988"
-	},
-	{
-		"title": "Star Wars IX",
-		"id": "2527338"
-	},
-	{
-		"title": "The Voyage of Doctor Dolittle",
-		"id": "6673612"
-	},
 	{
 		"title": "Godzilla vs. Kong",
 		"id": "5034838"
@@ -89,7 +72,6 @@ var results = [],
 
 module.exports = function(app) {
   app.get('/mv', function(req, res, next) {
-		
 		async.eachSeries(mv, (value, callback) => {
 			setTimeout(() => {
 				checkMovies(value, callback)
@@ -98,59 +80,41 @@ module.exports = function(app) {
 			if (err) console.error(err.message)
 							
 			let end = _(results).sortBy('date').value()
-				
+
 			fs.writeFile('./dev/movies.js', 'var movies = ' + JSON.stringify(end), {encoding: 'utf8', flag: 'w'},  (e) => {
 				if (e) console.error(e.message)
 				results = []
 				res.status(200).send(end)
 			})
 		})
-  })
-}
+	}
+)}
 
 function checkMovies(movie, callback) {
-		var url = 'https://www.imdb.com/title/tt' + movie.id
-		
-		// console.log('movie: ' + movie.title + ' | ' + url)
-		
-	  request({
-	    followAllRedirects: true,
-	    url: url
-	  }, function (error, response, body) {
-	    if (!error) {
-	      var dom = $(body),
-					block = dom.find('.title_wrapper'),
-					title = block.find('h1').text().replace(/\(\d{4}\)/, '').trim(),
-					txt = block.find('.subtext a:last').text(),
-				  tmp = txt.substring(0, txt.indexOf('(')).trim(),
-					dt = moment(tmp),
-				  date = dt.format('YYYY-MM-DD')
-				
-				
-				if (dt > today) {
-					results.push(Object.assign({}, movie, {
-						title,
-						date
-					}))
-				}
-				
-				console.log(title + ' : ' + date)
+	const url = 'https://www.imdb.com/title/tt' + movie.id
 
-				callback()
-	    } else {
-				console.log(movie.title + '[ ' + url + ' ] : '  + error)
-	    }
-	  })
-}
-
-function removeDuplicates(arr) {
-	let tmp = [arr[0]]
+	console.log(url)
 	
-	for (var i = 1, j = arr.length; i < j; i++) {
-		if (arr[i].dt !== arr[i-1].dt) {
-			tmp.push(arr[i])
+	JSDOM.fromURL(url, {}).then(dom => {
+		const {document} = dom.window
+
+		let wrapper = document.querySelector('.title_wrapper'),
+			h1 = wrapper.querySelector('h1').innerHTML,
+			title = h1.substring(0, h1.indexOf('&nbsp;')).trim(),
+			lnk = wrapper.querySelector('.subtext a:last-child').innerHTML,
+			str = lnk.substring(0, lnk.indexOf('(')).trim(),
+			dt = moment(str, 'DD MMMM YYYY'),
+			date = dt.format('YYYY-MM-DD')
+
+		if (dt > today) {
+			results.push(Object.assign({}, movie, {
+				title,
+				date
+			}))
 		}
-	}
-	
-	return tmp
+
+		console.log(title + ' | ' + date)
+
+		callback()
+	})
 }

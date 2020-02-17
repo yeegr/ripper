@@ -1,35 +1,38 @@
-var request = require('request'),
-    $ = require('jquery')(require("jsdom").jsdom().defaultView)
+const { JSDOM } = require('jsdom')
 
 module.exports = function(app) {
   app.get('/lynda', function(req, res, next) {
-    getEpisodeNames(res, req.query.path, req.query.dup)
+    const url = 'https://www.lynda.com/' + req.query.path
+
+    console.log(url)
+
+    let chapterList = '',
+      videoList = ''
+
+    JSDOM.fromURL(url, {}).then(dom => {
+      const {document} = dom.window,
+        chapters = document.querySelectorAll('.course-toc > li')
+
+      chapters.forEach((chapter, i) => {
+        let h4 = chapter.querySelector('.chapter-row h4').innerHTML,
+          tmp = h4.split('. '),
+          num = addZero(i),
+          title = num.toString() + ' ' + tmp[tmp.length-1],
+          items = chapter.querySelectorAll('.toc-items > li')
+        
+        chapterList += title + '<br>'
+
+        items.forEach((item, j) => {
+          let name = item.querySelector('.video-row a.item-name').innerHTML.trim(),
+            subject = num.toString() + addZero(1+j) + ' ' + name
+
+          videoList += subject + '<br>'
+        })
+      })
+
+      res.status(200).send(chapterList + '<br><br>' + videoList)
+    })
   })
 }
 
-function getEpisodeNames(res, path, duplicate) {
-  var url = 'https://www.lynda.com/' + path,
-  	duplicate = arguments[2] || false
-
-  request({
-    followAllRedirects: true,
-    url: url
-  }, function (error, response, body) {
-    if (!error) {
-      var dom = $(body),
-      list = dom.find('td.summary'),
-      text = ''
-
-      for (var i = 0, j = list.length; i < j; i++) {
-        var tmp = list[i].innerHTML
-
-        tmp = (tmp.indexOf('<sup') > -1) ? tmp.substring(0, tmp.indexOf('<sup')) : tmp,
-        tmp = tmp.replace(/<\/?[^>]+(>|$)/g, "").replace(/\"\s\"/g, '-').replace(/\"|\?/g, '').replace(': ', ' - ').replace('/', ' - ')
-
-        text += tmp + '<br/>' + ((duplicate === 'true') ? (tmp + '<br/>') : '')
-      }
-
-      res.status(200).send(text)
-    }
-  })
-}
+const addZero = (n) => (n < 10) ? '0' + n : n

@@ -19,13 +19,11 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cors())
 
-const wiki = require('./wiki')(app),
-  lynda = require('./lynda')(app)
-  bt = require('./bt')(app),
-  cstm = require('./cstm')(app),
-	tv = require('./tv')(app),
+const tv = require('./tv')(app),
   mv = require('./mv')(app),
-  grabber = require('./grabber')(app)
+  lynda = require('./lynda')(app),
+  show = require('./show')(app)
+  // cstm = require('./cstm')(app)
 
 router.use((req, res, next) => {
   next()

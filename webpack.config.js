@@ -14,7 +14,7 @@ fs.readdirSync('node_modules')
 })
 
 module.exports = {
-  debug: true,
+  mode: 'development',
   devtool: 'sourcemap',
   target: 'node',
   entry: path.resolve(__dirname, 'src/root.js'),

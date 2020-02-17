@@ -40,11 +40,13 @@ h1 {
 	display: inline;
 }
 .list {
+	margin-top: 0;
 	margin-bottom: 2em;
-	padding-left: 2em;
+	padding-left: 0;
 }
 
 .list > li {
+	list-style-type: none;
 	padding: .2em .5em .2em .2em;
 	white-space: nowrap;
 }
@@ -65,6 +67,7 @@ h1 {
 }
 	</style>
 	<script src="movies.js"></script>
+	<script src="shows.js"></script>
 	<script>
 		const make = (i) => '<a target="' + i.type +'" href="' + i.src + '">' + i.type + '</a>'
 
@@ -257,48 +260,90 @@ h1 {
 <body>
 	<div class="column">
 		<h1>Weekly</h1>
-			<script>
-				let tvHTML = '';
-				
-				for (let d=0; d<weekly.length; d++) {
-					let date = weekly[d]
-					
-					if (date.shows.length > 0) {
-						tvHTML += '<strong>' + date.day + '</strong><ul class="list">'
-				
-						for (let s=0; s<date.shows.length; s++) {
-							let show = date.shows[s],
-								downloads = show.downloads,
-								target = "episodes"
-							
-							if (show.title === "Marvel Week") {
-								target = "wwt"
-							} else if (show.title === "Windows Weekly") {
-								target = "_blank"
-							}
-					
-							tvHTML += '<li><a target="' + target + '" class="' + (show.first ? (checker(show.first) ? 'g' : 'r') : '') + '" href="' + show.episodes + '">' + show.title + '</a>'
-					
-							if (show.first) {
-								tvHTML += '<span class="' + (checker(show.first) && !checker(show.next) ? "g" : "r") + '">' + show.next + '</span> → '
-							}
+		<script>
+			const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+			let tvHTML = '',
+				target = 'imdb'
 
-							if (downloads && downloads.length > 0) {						
-								for (let l=0; l<downloads.length; l++) {
-									let e = downloads[l]
-									tvHTML += ((l > 0) ? ' | ' : '' ) + make(e)
-								}							
-							}
-					
-							tvHTML += '</li>'
-						}
-				
-						tvHTML += '</ul>'
+			for (day in shows) {
+				tvHTML += '<strong>' + daysOfWeek[day] + '</strong><ul class="list">'
+
+				shows[day].forEach(show => {
+					if (show.title === "Marvel Week") {
+						target = "comics"
+					} else if (show.title === "Windows Weekly") {
+						target = "_blank"
 					}
-				}
+
+					tvHTML += '<li>'
+					tvHTML += '<a target="' + target + '" class="' + (show.start ? (checker(show.start) ? 'g' : 'r') : '') + '" href="http://www.imdb.com/title/tt' + show.id + '/episodes?season=' + show.season + '">' + show.title + '</a>'
+
+					if (show.start && show.next) {
+						tvHTML += '<a class="' + (checker(show.start) && !checker(show.next.dt) ? "g" : "r") + '" target="_blank" href="' + show.download + '">' + show.next.dt + '</a>'
+					}
+
+					tvHTML += '</li>'
+			})
+
+				tvHTML += '</ul>'
+			}
+
+			document.write(tvHTML)
+			// let tvHTML = '';
+			
+			// for (let d=0; d<weekly.length; d++) {
+			// 	let date = weekly[d]
 				
-				document.write(tvHTML)
-			</script>
+			// 	if (date.shows.length > 0) {
+			// 		tvHTML += '<strong>' + date.day + '</strong><ul class="list">'
+			
+			// 		for (let s=0; s<date.shows.length; s++) {
+			// 			let show = date.shows[s],
+			// 				downloads = show.downloads,
+			// 				target = "episodes"
+						
+			// 			if (show.title === "Marvel Week") {
+			// 				target = "wwt"
+			// 			} else if (show.title === "Windows Weekly") {
+			// 				target = "_blank"
+			// 			}
+				
+			// 			tvHTML += '<li><a target="' + target + '" class="' + (show.first ? (checker(show.first) ? 'g' : 'r') : '') + '" href="' + show.episodes + '">' + show.title + '</a>'
+				
+			// 			if (show.first) {
+			// 				tvHTML += '<span class="' + (checker(show.first) && !checker(show.next) ? "g" : "r") + '">' + show.next + '</span> → '
+			// 			}
+
+			// 			if (downloads && downloads.length > 0) {						
+			// 				for (let l=0; l<downloads.length; l++) {
+			// 					let e = downloads[l]
+			// 					tvHTML += ((l > 0) ? ' | ' : '' ) + make(e)
+			// 				}							
+			// 			}
+				
+			// 			tvHTML += '</li>'
+			// 		}
+			
+			// 		tvHTML += '</ul>'
+			// 	}
+			// }
+			
+			// document.write(tvHTML)
+		</script>
+		<h1>RARBG</h1>
+		<ul class="list">
+			<li>
+				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+rartv">1080p TV</a> | 
+				<a target="rarbg" href="https://rarbg.to/torrents.php?category%5B%5D=18&search=ion10">ION10 TV</a> | 
+				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+rarbg">1080p movies</a>
+			</li>
+		</ul>
+		<h1>Binge</h1>
+		<ul class="list">
+			<li>
+				<a class="g" target="wiki" href="https://en.wikipedia.org/wiki/The_Punisher_(TV_series)">The Punisher</a>
+				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+web+rartv+punisher">1080p</a>
+			</li>
 		</ul>
 	</div>
 	<div class="column">
@@ -320,23 +365,6 @@ h1 {
 	
 	document.write(moveHTML)
 </script>
-		</ul>
-		<h1>Binge</h1>
-		<ul class="list">
-			<li>
-				<a class="g" target="wiki" href="https://en.wikipedia.org/wiki/The_Punisher_(TV_series)">The Punisher</a>
-				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+web+rartv+punisher">1080p</a>
-			</li>
-		</ul>
-		<h1>TV</h1>
-		<ul class="list">
-			<li>
-				<a target="torrentz" href="https://torrentz2.eu/search?f=web+720p+aac+x264">720p web aac</a>
-			</li>
-			<li>
-				<a target="rarbg" href="https://rarbg.to/torrents.php?category%5B%5D=18&category%5B%5D=41&category%5B%5D=49&search=1080p+rarbg">1080p TV</a> | 
-				<a target="rarbg" href="https://rarbg.to/torrents.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=42&category%5B%5D=46&search=1080p+rarbg">1080p movies</a>
-			</li>
 		</ul>
 		<h1>Training</h1>
 		<ul class="list">
@@ -364,7 +392,7 @@ h1 {
 				<a target="books" href="https://torrentz2.eu/searchA?f=ebook+mobi+azw3">Non-fiction:mobi</a>
 			</li>
 			<li>
-				<a target="comics" href="https://worldwidetorrents.to/torrents.php?cat=132">Comic books</a> | 
+				<a target="comics" href="https://getcomics.info/">Comic books</a> | 
 				<a target="comics" href="https://getcomics.info/?s=tpb">TPBs</a> | 
 			</li>
 		</ul>
