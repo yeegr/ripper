@@ -8,8 +8,9 @@
     "stop": "killall node",
     "restart": "npm stop && npm start",
     "tv": "curl http://localhost:10001/tv",
+    "binge": "curl http://localhost:10001/binge",
     "mv": "curl http://localhost:10001/mv",
-    "get": "npm run tv && npm run mv",
+    "all": "npm run tv && npm run mv",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stone",
@@ -21,11 +22,12 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.0",
-    "jquery": "^3.4.1",
-    "jsdom": "^16.1.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.2.2",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "path": "^0.12.7",
+    "prompts": "^2.3.2",
     "request": "^2.88.2"
   },
   "devDependencies": {

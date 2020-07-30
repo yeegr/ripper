@@ -65,196 +65,85 @@ h1 {
 .y {
 	color: #f66;
 }
+
+fieldset {
+	border-width: 0;
+	margin: 0 0 .5em 0;
+	padding: 0;
+}
+
+fieldset label {
+	display: block;
+	font-weight: bold;
+}
+
+fieldset input {
+	border-width: 1px;
+	box-sizing: border-box;
+	outline: none;
+	padding: .3em .2em;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+	border-width: 0;
+	cursor: pointer;
+	display: block;
+	margin-bottom: .5em;
+	padding: .5em;
+	width: 100%;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover {
+	background-color: #666;
+	color: #fff;
+	outline: none;
+}
+
+input[type="submit"]:active,
+input[type="button"]:active,
+input[type="reset"]:active {
+	background-color: #333;
+	color: #fff;
+	outline: none;
+}
+
+input[type="button"] {
+	margin-top: .5em;
+}
+
+#textOutput {
+	border-width: 0;
+	box-sizing: border-box;
+	display: block;
+	height: 5em;
+	outline: none;
+	overflow: hidden;
+	width: 100%;
+}
 	</style>
 	<script src="movies.js"></script>
 	<script src="shows.js"></script>
+	<script src="binge.js"></script>
 	<script>
-		const make = (i) => '<a target="' + i.type +'" href="' + i.src + '">' + i.type + '</a>'
+		const make = (i) => '<a target="' + i.type +'" href="' + i.src + '">' + i.type + '</a>',
+			addZero = (n) => (n < 10) ? '0' + n : n,
+			now = new Date(),
+			today = new Date(now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate())
+			adjusted = today.getTime()
 
-		const checker = (str) => {
-			let today = new Date(),
-				tmp = new Date(str)
-			
+		const isLater = (str) => {
+			let tmp = new Date(str)
+		
 			if (isNaN(tmp.getTime())) {
 				return false
 			} else {
-				return (today.getTime() > tmp.getTime())
+				return (tmp.getTime() < adjusted)
 			}
 		}
-		
-		const weekly = [
-			{
-				"day": "Sunday",
-				"shows": [
-				]
-			},
-			{
-				"day": "Monday",
-				"shows": [
-					{
-						"title": "Last Week Tonight",
-						"episodes": "https://en.wikipedia.org/wiki/List_of_Last_Week_Tonight_with_John_Oliver_episodes#References",
-						"first": "2018-02-12",
-						"next": "2018-02-12",
-						"downloads": [
-							{
-								"type": "720p",
-								"src": "https://rarbg.to/torrents.php?search=last+week+tonight+720p"
-							}
-						]
-					},
-					{
-						"title": "Star Trek: Discovery",
-						"episodes": "https://en.wikipedia.org/wiki/Star_Trek:_Discovery#Production",
-						"first": "2019-01-17",
-						"next": "2019-04-18",
-						"downloads": [
-							{
-								"type": "1080p",
-								"src": "https://rarbg.to/torrents.php?search=star+trek+discovery+rartv+1080p+web+aac2"
-							}
-						]
-					},
-					{
-						"title": "Silicon Valley",
-						"episodes": "http://en.wikipedia.org/wiki/List_of_Silicon_Valley_episodes#References",
-						"first": "2019-10-27",
-						"next": "2019-10-27",
-						"downloads": [
-							{
-								"type": "AMZN",
-								"src": "https://rarbg.to/torrents.php?search=silicon+valley+amzn+720p+webrip"
-							}
-						]
-					},
-				]
-			},
-			{
-				"day": "Tuesday",
-				"shows": [
-				]
-			},
-			{
-				"day": "Wednesday",
-				"shows": [
-				{
-						"title": "Brooklyn Nine-Nine",
-						"episodes": "http://en.wikipedia.org/wiki/List_of_Brooklyn_Nine-Nine_episodes#References",
-						"first": "2020-01-27",
-						"next": "2020-01-27",
-						"downloads": [
-							{
-								"type": "720p",
-								"src": "https://rarbg.to/torrents.php?search=brooklyn+nine+rartv+720p"
-							}
-						]
-					},
-					{
-						"title": "The Mandalorian",
-						"episodes": "https://en.wikipedia.org/wiki/The_Mandalorian#Production",
-						"first": "2019-11-12",
-						"next": "2019-11-12",
-						"downloads": [
-							{
-								"type": "1080p",
-								"src": "https://rarbg.to/torrents.php?search=mandalorian+rartv+1080p"
-							}
-						]
-					}
-				]
-			},
-			{
-				"day": "Thursday",
-				"shows": [
-					{
-						"title": "Marvel Week",
-						"episodes": "https://torrentz2.eu/search?f=marvel+week"
-					},
-					{
-						"title": "Windows Weekly",
-						"episodes": "http://twit.tv/ww"
-					},
-					{
-						"title": "Mr. Robot",
-						"episodes": "https://en.wikipedia.org/wiki/List_of_Mr._Robot_episodes#Specials",
-						"first": "2019-10-06",
-						"next": "2019-10-06",
-						"downloads": [
-							{
-								"type": "1080p",
-								"src": "https://rarbg.to/torrents.php?search=mr+robot+1080p+amzn"
-							}
-						]
-					}
-				]
-			},
-			{
-				"day": "Friday",
-				"shows": [
-					{
-						"title": "Mom",
-						"episodes": "https://en.wikipedia.org/wiki/List_of_Mom_(TV_series)_episodes#References",
-						"first": "2019-09-26",
-						"next": "2019-09-26",
-						"downloads": [
-							{
-								"type": "720p",
-								"src": "https://rarbg.to/torrents.php?search=mom+rartv+720p"
-							}
-						]
-					},
-					{
-						"title": "The Orville",
-						"episodes": "https://en.wikipedia.org/wiki/The_Orville#Production",
-						"first": "2020-10-01",
-						"next": "2020-10-01",
-						"downloads": [
-							{
-								"type": "WEB",
-								"src": "https://rarbg.to/torrents.php?search=orville+web+x264"
-							}
-						]
-					}
-				]
-			},
-			{
-				"day": "Saturday",
-				"shows": [
-					{
-						"title": "Agents of SHIELD",
-						"episodes": "https://en.wikipedia.org/wiki/List_of_Agents_of_S.H.I.E.L.D._episodes#References",
-						"first": "2020-05-01",
-						"next": "2020-05-01",
-						"downloads": [
-							{
-								"type": "720p",
-								"src": "https://rarbg.to/torrents.php?search=agents+rartv+720p"
-							}
-						]
-					},
-					{
-						"title": "Real Time with Bill Maher",
-						"episodes": "http://en.wikipedia.org/wiki/List_of_Real_Time_with_Bill_Maher_episodes_(2017)",
-						"first": "2018-01-20",
-						"next": "2018-01-20",
-						"downloads": [
-							{
-								"type": "720p",
-								"src": "https://rarbg.to/torrents.php?search=real+time+with+bill+maher+720p"
-							}
-						]
-					}
-				]
-			}
-		]
-
-		const binge = [
-			{
-				"title": "",
-				"link": "",
-				"src": ""
-			}
-		]
 	</script>
 </head>
 <body>
@@ -263,7 +152,8 @@ h1 {
 		<script>
 			const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 			let tvHTML = '',
-				target = 'imdb'
+				target = 'imdb',
+				href = ''
 
 			for (day in shows) {
 				tvHTML += '<strong>' + daysOfWeek[day] + '</strong><ul class="list">'
@@ -271,15 +161,20 @@ h1 {
 				shows[day].forEach(show => {
 					if (show.title === "Marvel Week") {
 						target = "comics"
+						href = show.link
 					} else if (show.title === "Windows Weekly") {
 						target = "_blank"
+						href = show.link
+					} else {
+						target = "imdb"
+						href = "http://www.imdb.com/title/tt" + show.id + "/episodes?season=" + show.season
 					}
 
 					tvHTML += '<li>'
-					tvHTML += '<a target="' + target + '" class="' + (show.start ? (checker(show.start) ? 'g' : 'r') : '') + '" href="http://www.imdb.com/title/tt' + show.id + '/episodes?season=' + show.season + '">' + show.title + '</a>'
+					tvHTML += '<a target="' + target + '" class="' + (show.start ? (isLater(show.start) ? 'g' : 'r') : '') + '" href="' + href + '">' + show.title + '</a>'
 
 					if (show.start && show.next) {
-						tvHTML += '<a class="' + (checker(show.start) && !checker(show.next.dt) ? "g" : "r") + '" target="_blank" href="' + show.download + '">' + show.next.dt + '</a>'
+						tvHTML += '<a class="' + (!isLater(show.next.dt) ? "g" : "r") + '" target="_blank" href="' + show.download + '">' + show.next.dt + '</a>'
 					}
 
 					tvHTML += '</li>'
@@ -289,46 +184,6 @@ h1 {
 			}
 
 			document.write(tvHTML)
-			// let tvHTML = '';
-			
-			// for (let d=0; d<weekly.length; d++) {
-			// 	let date = weekly[d]
-				
-			// 	if (date.shows.length > 0) {
-			// 		tvHTML += '<strong>' + date.day + '</strong><ul class="list">'
-			
-			// 		for (let s=0; s<date.shows.length; s++) {
-			// 			let show = date.shows[s],
-			// 				downloads = show.downloads,
-			// 				target = "episodes"
-						
-			// 			if (show.title === "Marvel Week") {
-			// 				target = "wwt"
-			// 			} else if (show.title === "Windows Weekly") {
-			// 				target = "_blank"
-			// 			}
-				
-			// 			tvHTML += '<li><a target="' + target + '" class="' + (show.first ? (checker(show.first) ? 'g' : 'r') : '') + '" href="' + show.episodes + '">' + show.title + '</a>'
-				
-			// 			if (show.first) {
-			// 				tvHTML += '<span class="' + (checker(show.first) && !checker(show.next) ? "g" : "r") + '">' + show.next + '</span> → '
-			// 			}
-
-			// 			if (downloads && downloads.length > 0) {						
-			// 				for (let l=0; l<downloads.length; l++) {
-			// 					let e = downloads[l]
-			// 					tvHTML += ((l > 0) ? ' | ' : '' ) + make(e)
-			// 				}							
-			// 			}
-				
-			// 			tvHTML += '</li>'
-			// 		}
-			
-			// 		tvHTML += '</ul>'
-			// 	}
-			// }
-			
-			// document.write(tvHTML)
 		</script>
 		<h1>RARBG</h1>
 		<ul class="list">
@@ -338,13 +193,24 @@ h1 {
 				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+rarbg">1080p movies</a>
 			</li>
 		</ul>
-		<h1>Binge</h1>
-		<ul class="list">
-			<li>
-				<a class="g" target="wiki" href="https://en.wikipedia.org/wiki/The_Punisher_(TV_series)">The Punisher</a>
-				<a target="rarbg" href="https://rarbg.to/torrents.php?search=1080p+web+rartv+punisher">1080p</a>
-			</li>
-		</ul>
+		<h1>Binge</h1>		
+		<script>
+			let bingeHTML = '<ul class="list">',
+				bingeTarget = 'imdb'
+
+			binge.forEach(show => {
+				let className = isLater(show.date) ? 'g' : 'r'
+
+				bingeHTML += '<li>'
+				bingeHTML += '<a class="' + className + '" target="' + bingeTarget +'" href="https://www.imdb.com/title/tt' + show.id + '/episodes?season=' + show.season + '">' + show.title + '</a>'
+				bingeHTML += '<a target="rarbg" href="' + show.download + '">' + show.date + '</a>'
+				bingeHTML += '</li>'
+			})
+
+			bingeHTML += '</ul>'
+
+			document.write(bingeHTML)
+		</script>
 	</div>
 	<div class="column">
 		<h1>Movies</h1>
@@ -399,7 +265,7 @@ h1 {
 		<h1>Magazine</h1>
 		<ul class="list">
 			<li>
-				<a target="mmg" href="https://torrentz2.eu/search?f=assorted+magazines">Assorted Magazines</a>
+				<a target="mmg" href="https://www.magnetdl.com/a/assorted-magazines-2020/">Assorted Magazines</a>
 			</li>
 		</ul>
 		<strong>Apple</strong>
@@ -426,6 +292,73 @@ h1 {
 			<li><a target="mag" href="https://torrentz2.eu/searchA?f=stuff+uk">Stuff</a></li>
 			<li><a target="mag" href="https://torrentz2.eu/searchA?f=t3+uk">T3 Magazine</a></li>
 		</ul>
+		<h1>TV episode list</h1>
+		<form id="TVSearch">
+			<fieldset>
+				<label>IMDB id:</label>
+				<input name="id" type="number" maxlength="10" />
+			</fieldset>
+			<fieldset>
+				<label>Season:</label>
+				<input name="season" value="1" type="number" max="10" min="1" maxlength="2" />
+			</fieldset>
+			<fieldset>
+				<input type="submit" value="Search" />
+			</fieldset>
+			<fieldset>
+				<textarea id="textOutput"></textarea>
+				<input type="button" name="copy" value="Copy" />
+			</fieldset>
+			<fieldset>
+				<input type="reset" value="Clear" />
+			</fieldset>
+		</form>
+		<script>
+			const tvSearch = document.getElementById('TVSearch'),
+				idInput = tvSearch.querySelector('[name="id"]'),
+				seasonInput = tvSearch.querySelector('[name="season"]'),
+				textOutput = document.getElementById('textOutput'),
+				copyButton = tvSearch.querySelector('[name="copy"]')
+
+			textOutput.style.height = '0em'
+			copyButton.style.display = 'none'
+
+			tvSearch.addEventListener('reset', (e) => {
+				seasonInput.value = 1
+				textOutput.value = ''
+				textOutput.style.height = '0em'
+				copyButton.style.display = 'none'
+			})
+
+			copyButton.addEventListener('click', (e) => {
+				e.preventDefault()
+
+				textOutput.select()
+				document.execCommand('copy')
+			})
+
+			tvSearch.addEventListener('submit', (e) => {
+				e.preventDefault()
+
+				let id = idInput.value,
+					season = seasonInput.value
+
+				if (id.length > 0 && season.length > 0) {
+					var url = 'http://localhost:10001/list?id=' + id + '&season=' + season
+
+					console.log('fetching...')
+
+					fetch(url)
+					.then(res => res.text())
+					.then(txt => {
+						console.log(txt.replace(/<br>/g, '\n'))
+						textOutput.value = txt.replace(/<br>/g, '\n')
+						textOutput.style.height = '10em'
+						copyButton.style.display = 'block'
+					})
+				}
+			})
+		</script>
 	</div>
 </body>
 </html>

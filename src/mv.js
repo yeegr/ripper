@@ -6,20 +6,16 @@ const async = require('async'),
 
 var mv = [
 	{
-		"title": "Godzilla vs. Kong",
-		"id": "5034838"
-	},
-	{
 		"title": "Mulan",
 		"id": "4566758"
 	},
 	{
-		"title": "Bond 25",
-		"id": "2382320"
+		"title": "The King's Men",
+		"id": "6856242"
 	},
 	{
-		"title": "Onward",
-		"id": "7146812"
+		"title": "Bond 25",
+		"id": "2382320"
 	},
 	{
 		"title": "Black Widow",
@@ -30,7 +26,7 @@ var mv = [
 		"id": "7126948"
 	},
 	{
-		"title": "Ghostbusters 2020",
+		"title": "Ghostbusters: Afterlife",
 		"id": "4513678"
 	},
 	{
@@ -64,6 +60,22 @@ var mv = [
 	{
 		"title": "Avatar 2",
 		"id": "1630029"
+	},
+	{
+		"title": "Spider-Man 3",
+		"id": "10872600"
+	},
+	{
+		"title": "Captain Marvel 2",
+		"id": "10676048"
+	},
+	{
+		"title": "Black Panther 2",
+		"id": "9114286"
+	},
+	{
+		"title": "Guardians of the Galaxy Vol. 3",
+		"id": "6791350"
 	}
 ]
 

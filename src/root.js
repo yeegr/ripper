@@ -22,7 +22,9 @@ app.use(cors())
 const tv = require('./tv')(app),
   mv = require('./mv')(app),
   lynda = require('./lynda')(app),
-  show = require('./show')(app)
+  list = require('./list')(app),
+  binge = require('./binge')(app),
+  manga = require('./manga')(app)
   // cstm = require('./cstm')(app)
 
 router.use((req, res, next) => {

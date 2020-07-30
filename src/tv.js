@@ -4,74 +4,107 @@ const async = require('async'),
 	moment = require('moment'),
 	_ = require('lodash')
 
+const rarbg = 'https://rarbgmirror.org/torrents.php?search='
+
 var tv = [
-	{
-		"title":"Homeland",
-		"id":"1796960",
-		"season":8,
-		"download":"https://rarbg.to/torrents.php?search=homeland"
-	},
 	{
 		"title":"Brooklyn Nine-Nine",
 		"id":"2467372",
-		"season":7,
-		"download":"https://rarbg.to/torrents.php?search=720p+brooklyn+nine-nine"
+		"season":8,
+		"delay":1,
+		"download":rarbg+"ion10+brooklyn+nine-nine"
 	},
 	{
 		"title":"Last Week Tonight",
 		"id":"3530232",
 		"season":7,
-		"download":"https://rarbg.to/torrents.php?search=720p+last+week+tonight"
+		"delay":1,
+		"download":rarbg+"720p+last+week+tonight"
 	},
 	{
 		"title":"Mom",
 		"id":"2660806",
-		"season":7,
-		"download":"https://rarbg.to/torrents.php?search=720p+mom"
+		"season":8,
+		"delay":1,
+		"download":rarbg+"ion10+mom"
+	},
+	{
+		"title":"Star Trek: Picard",
+		"id":"8806524",
+		"season":2,
+		"delay":0,
+		"download":rarbg+"1080p+rartv+star+trek+picard"
 	},
 	{
 		"title":"The Orville",
 		"id":"5691552",
 		"season":3,
-		"download":"https://rarbg.to/torrents.php?search=1080p+rartv+the+orville"
-	},
-	{
-		"title":"Will and Grace",
-		"id":"0157246",
-		"season":11,
-		"download":"https://rarbg.to/torrents.php?search=ion10+will+and+grace"
+		"delay":1,
+		"download":rarbg+"1080p+rartv+the+orville"
 	},
 	{
 		"title":"Agents of SHIELD",
 		"id":"2364582",
 		"season":7,
-		"download":"https://rarbg.to/torrents.php?search=rartv+1080p+agents"
+		"delay":1,
+		"download":rarbg+"rartv+1080p+agents"
 	},
 	{
 		"title":"Harley Quinn",
 		"id":"7658402",
-		"season":1,
-		"download":"https://rarbg.to/torrents.php?search=rartv+1080p+harley+quinn+dcu"
+		"season":3,
+		"delay":1,
+		"download":rarbg+"rartv+1080p+harley+quinn+dcu"
 	},
 	{
-		"title":"Star Wars: The Clone Wars",
-		"id":"0458290",
-		"season":7,
-		"download":"https://rarbg.to/torrents.php?search=rartv+1080p+star+wars+clone"
+		"title":"DuckTales",
+		"id":"5531466",
+		"season":3,
+		"delay":1,
+		"download":rarbg+"rartv+1080p+amzn+ducktales"
+	},
+	{
+		"title":"Zoey's Extraordinary Playlist",
+		"id":"10314462",
+		"season":2,
+		"delay":0,
+		"download":rarbg+"ion10+zoey+extraordinary+playlist"
 	},
 	{
 		"title":"Real Time with Bill Maher",
 		"id":"0350448",
 		"season":18,
-		"download":"https://rarbg.to/torrents.php?search=720p+real+time+with+bill+maher"
+		"delay":1,
+		"download":rarbg+"720p+real+time+with+bill+maher"
 	},
 	{
-		"title":"_Marvel Week",
-		"download":"https://torrentz2.eu/search?f=marvel+week"
+		"title":"Doom Patrol",
+		"id":"8416494",
+		"season":2,
+		"delay":1,
+		"download":rarbg+"1080p+doom+patrol"
 	},
 	{
-		"title":"_Windows Weekly",
-		"download":"http://twit.tv/ww"
+		"title":"Star Trek: Lower Decks",
+		"id":"9184820",
+		"season":1,
+		"delay":1,
+		"download":rarbg+"1080p+star+trek+lower+decks"
+	},
+	// {
+	// 	"title":"Disney Gallery: The Mandalorian",
+	// 	"id":"12162902",
+	// 	"season":1,
+	// 	"delay":1,
+	// 	"download":rarbg+"1080p+disney+gallery+star+wars+mandalorian"
+	// },
+	{
+		"title":"Marvel Week",
+		"link":"https://getcomics.info/tag/marvel-now/"
+	},
+	{
+		"title":"Windows Weekly",
+		"link":"http://twit.tv/ww"
 	}
 ]
 
@@ -102,13 +135,13 @@ module.exports = function(app) {
 }
 
 function getEpisodeDates(show, callback) {
-	if (show.title === '_Marvel Week') {
+	if (show.title === 'Marvel Week') {
 		results.push(Object.assign({}, show, {
 			"day": 4
 		}))
 
 		callback()
-	} else if (show.title === '_Windows Weekly') {
+	} else if (show.title === 'Windows Weekly') {
 		results.push(Object.assign({}, show, {
 			"day": 4
 		}))
@@ -117,7 +150,7 @@ function getEpisodeDates(show, callback) {
 	} else {
 		const url = 'https://www.imdb.com/title/tt' + show.id + '/episodes?season=' + show.season
 
-		console.log(url)
+		console.log(url + ' | ' + show.title)
 
 		JSDOM.fromURL(url, {}).then(dom => {
 			const {document} = dom.window,
@@ -133,20 +166,22 @@ function getEpisodeDates(show, callback) {
 					title = lnk.innerHTML.trim(),
 					airdate = info.querySelector('.airdate'),
 					str = airdate.innerHTML.trim(),
-					date = moment(str, 'DD MMMM YYYY'),
-					dt = date.format('YYYY-MM-DD')
+					date = (str.length > 4) ? moment(str, 'DD MMMM YYYY').add(show.delay, 'days') : null,
+					dt = date ? date.format('YYYY-MM-DD') : null
 
-				if (i === 0) {
+				if (i === 0 && date) {
 					start = dt
 					day = date.day()
 				}
 
-				if (date >= today && next === undefined) {
+				if (date && date.diff(today) > 0 && next === undefined) {
 					next = {
 						"ep": (1+i),
 						dt,
 						title
 					}
+
+					day = date.day()
 				}
 			})
 

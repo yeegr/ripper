@@ -1,7 +1,7 @@
 const { JSDOM } = require('jsdom')
 
 module.exports = function(app) {
-  app.get('/show', function(req, res, next) {
+  app.get('/list', function(req, res, next) {
 		const url = 'https://www.imdb.com/title/tt' + req.query.id + '/episodes?season=' + req.query.season
 
 		console.log(url)
