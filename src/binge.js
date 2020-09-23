@@ -13,13 +13,6 @@ var binge = [
 	// 	"download":"https://rarbg.to/torrents.php?search=ion10+space+force"
 	// },
 	{
-		"title":"The Boys",
-		"id":"1190634",
-		"season":2,
-		"delay":1,
-		"download":"https://rarbg.to/torrents.php?search=1080p+the+boys"
-	},
-	{
 		"title":"Wizards",
 		"id":"7736558",
 		"season":1,

@@ -4,7 +4,7 @@ const async = require('async'),
 	moment = require('moment'),
 	_ = require('lodash')
 
-const rarbg = 'https://rarbgmirror.org/torrents.php?search='
+const rarbg = 'https://rarbg.to/torrents.php?search='
 
 var tv = [
 	{
@@ -43,13 +43,6 @@ var tv = [
 		"download":rarbg+"1080p+rartv+the+orville"
 	},
 	{
-		"title":"Agents of SHIELD",
-		"id":"2364582",
-		"season":7,
-		"delay":1,
-		"download":rarbg+"rartv+1080p+agents"
-	},
-	{
 		"title":"Harley Quinn",
 		"id":"7658402",
 		"season":3,
@@ -80,7 +73,7 @@ var tv = [
 	{
 		"title":"Doom Patrol",
 		"id":"8416494",
-		"season":2,
+		"season":3,
 		"delay":1,
 		"download":rarbg+"1080p+doom+patrol"
 	},
@@ -89,12 +82,33 @@ var tv = [
 		"id":"9184820",
 		"season":1,
 		"delay":1,
-		"download":rarbg+"1080p+star+trek+lower+decks"
+		"download":rarbg+"1080p+star+trek+lower+decks+cbs"
+	},
+	{
+		"title":"The Mandalorian",
+		"id":"8111088",
+		"season":2,
+		"delay":1,
+		"download":rarbg+"1080p+rartv+dsny+mandalorian"
+	},
+	{
+		"title":"WondaVision",
+		"id":"9140560",
+		"season":1,
+		"delay":1,
+		"download":rarbg+"1080p+rartv+dsny+wandavision"
+	},
+	{
+		"title":"The Boys",
+		"id":"1190634",
+		"season":2,
+		"delay":1,
+		"download":rarbg+"1080p+the+boys"
 	},
 	// {
 	// 	"title":"Disney Gallery: The Mandalorian",
 	// 	"id":"12162902",
-	// 	"season":1,
+	// 	"season":2,
 	// 	"delay":1,
 	// 	"download":rarbg+"1080p+disney+gallery+star+wars+mandalorian"
 	// },
