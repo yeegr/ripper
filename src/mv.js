@@ -6,8 +6,12 @@ const async = require('async'),
 
 var mv = [
 	{
-		"title": "Mulan",
-		"id": "4566758"
+		"title": "Free Guy",
+		"id": "6264654"
+	},
+	{
+		"title": "A Quiet Place 2",
+		"id": "8332922"
 	},
 	{
 		"title": "The King's Men",
@@ -28,6 +32,10 @@ var mv = [
 	{
 		"title": "Ghostbusters: Afterlife",
 		"id": "4513678"
+	},
+	{
+		"title": "Godzilla vs. Kong",
+		"id": "5034838"
 	},
 	{
 		"title": "Top Gun: Maverick",
@@ -74,8 +82,48 @@ var mv = [
 		"id": "9114286"
 	},
 	{
+		"title": "Morbius",
+		"id": "5108870"
+	},
+	{
+		"title": "MI7",
+		"id": "9603212"
+	},
+	{
+		"title": "Matrix 4",
+		"id": "10838180"
+	},
+	{
+		"title": "Venom 2",
+		"id": "7097896"
+	},
+	{
+		"title": "The Batman",
+		"id": "1877830"
+	},
+	{
+		"title": "The Hitman's Wife's Bodyguard",
+		"id": "8385148"
+	},
+	{
+		"title": "John Wick 4",
+		"id": "10366206"
+	},
+	{
 		"title": "Guardians of the Galaxy Vol. 3",
 		"id": "6791350"
+	},
+	{
+		"title": "The Suicide Squad",
+		"id": "6334354"
+	},
+	{
+		"title": "Nobody",
+		"id": "7888964"
+	},
+	{
+		"title": "Uncharted",
+		"id": "1464335"
 	}
 ]
 

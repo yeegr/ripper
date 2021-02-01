@@ -8,110 +8,124 @@ const rarbg = 'https://rarbg.to/torrents.php?search='
 
 var tv = [
 	{
+		"title":"Harley Quinn",
+		"id":"7658402",
+		"season":3,
+		"delay":24,
+		"download":rarbg+"rartv+1080p+harley+quinn+dcu"
+	},
+	{
+		"title":"Big Hero 6: The Series",
+		"id":"5515212",
+		"season":3,
+		"delay":24,
+		"download":rarbg+"rartv+1080p+big+hero+6"
+	},
+	{
+		"title":"Primal",
+		"id":"10332508",
+		"season":2,
+		"delay":24,
+		"download":rarbg+"rartv+1080p+primal"
+	},
+	{
+		"title":"His Dark Material",
+		"id":"5607976",
+		"season":3,
+		"delay":24,
+		"download":rarbg+"1080p+amzn+his+dark+material"
+	},
+	{
 		"title":"Brooklyn Nine-Nine",
 		"id":"2467372",
 		"season":8,
-		"delay":1,
+		"delay":24,
 		"download":rarbg+"ion10+brooklyn+nine-nine"
 	},
 	{
 		"title":"Last Week Tonight",
 		"id":"3530232",
-		"season":7,
-		"delay":1,
+		"season":8,
+		"delay":24,
 		"download":rarbg+"720p+last+week+tonight"
 	},
 	{
 		"title":"Mom",
 		"id":"2660806",
 		"season":8,
-		"delay":1,
+		"delay":24,
 		"download":rarbg+"ion10+mom"
 	},
 	{
 		"title":"Star Trek: Picard",
 		"id":"8806524",
 		"season":2,
-		"delay":0,
+		"delay":12,
 		"download":rarbg+"1080p+rartv+star+trek+picard"
 	},
 	{
 		"title":"The Orville",
 		"id":"5691552",
 		"season":3,
-		"delay":1,
+		"delay":24,
 		"download":rarbg+"1080p+rartv+the+orville"
-	},
-	{
-		"title":"Harley Quinn",
-		"id":"7658402",
-		"season":3,
-		"delay":1,
-		"download":rarbg+"rartv+1080p+harley+quinn+dcu"
-	},
-	{
-		"title":"DuckTales",
-		"id":"5531466",
-		"season":3,
-		"delay":1,
-		"download":rarbg+"rartv+1080p+amzn+ducktales"
 	},
 	{
 		"title":"Zoey's Extraordinary Playlist",
 		"id":"10314462",
 		"season":2,
-		"delay":0,
+		"delay":24,
 		"download":rarbg+"ion10+zoey+extraordinary+playlist"
 	},
 	{
 		"title":"Real Time with Bill Maher",
 		"id":"0350448",
-		"season":18,
-		"delay":1,
+		"season":19,
+		"delay":24,
 		"download":rarbg+"720p+real+time+with+bill+maher"
 	},
 	{
 		"title":"Doom Patrol",
 		"id":"8416494",
 		"season":3,
-		"delay":1,
+		"delay":24,
 		"download":rarbg+"1080p+doom+patrol"
 	},
 	{
 		"title":"Star Trek: Lower Decks",
 		"id":"9184820",
-		"season":1,
-		"delay":1,
+		"season":2,
+		"delay":12,
 		"download":rarbg+"1080p+star+trek+lower+decks+cbs"
 	},
 	{
 		"title":"The Mandalorian",
 		"id":"8111088",
-		"season":2,
-		"delay":1,
-		"download":rarbg+"1080p+rartv+dsny+mandalorian"
+		"season":3,
+		"delay":12,
+		"download":rarbg+"1080p+rartv+mandalorian"
 	},
 	{
 		"title":"WondaVision",
 		"id":"9140560",
 		"season":1,
-		"delay":1,
+		"delay":12,
 		"download":rarbg+"1080p+rartv+dsny+wandavision"
 	},
 	{
 		"title":"The Boys",
 		"id":"1190634",
-		"season":2,
-		"delay":1,
+		"season":3,
+		"delay":12,
 		"download":rarbg+"1080p+the+boys"
 	},
-	// {
-	// 	"title":"Disney Gallery: The Mandalorian",
-	// 	"id":"12162902",
-	// 	"season":2,
-	// 	"delay":1,
-	// 	"download":rarbg+"1080p+disney+gallery+star+wars+mandalorian"
-	// },
+	{
+		"title":"Disney Gallery: The Mandalorian",
+		"id":"12162902",
+		"season":2,
+		"delay":24,
+		"download":rarbg+"1080p+disney+gallery+star+wars+mandalorian"
+	},
 	{
 		"title":"Marvel Week",
 		"link":"https://getcomics.info/tag/marvel-now/"
@@ -180,7 +194,7 @@ function getEpisodeDates(show, callback) {
 					title = lnk.innerHTML.trim(),
 					airdate = info.querySelector('.airdate'),
 					str = airdate.innerHTML.trim(),
-					date = (str.length > 4) ? moment(str, 'DD MMMM YYYY').add(show.delay, 'days') : null,
+					date = (str.length > 4) ? moment(str, 'DD MMMM YYYY').add(show.delay, 'hours') : null,
 					dt = date ? date.format('YYYY-MM-DD') : null
 
 				if (i === 0 && date) {

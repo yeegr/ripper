@@ -12,26 +12,47 @@ var binge = [
 	// 	"delay":1,
 	// 	"download":"https://rarbg.to/torrents.php?search=ion10+space+force"
 	// },
+	// {
+	// 	"title":"Carmen Sandiego",
+	// 	"id":"7042146",
+	// 	"season":3,
+	// 	"delay":1,
+	// 	"download":"https://rarbg.to/torrents.php?search=rartv+1080p+nf+carmen+sandiego"
+	// },
+	// {
+	// 	"title":"Wizards",
+	// 	"id":"7736558",
+	// 	"season":1,
+	// 	"delay":1,
+	// 	"download":"https://rarbg.to/torrents.php?search=1080p+wizards"
+	// },
+	// {
+	// 	"title":"Tiny Creatures",
+	// 	"id":"12759334",
+	// 	"season":1,
+	// 	"delay":1,
+	// 	"download":"https://rarbg.to/torrents.php?search=1080p+tiny+creatures"
+	// },
+	// {
+	// 	"title":"The Umbrella Academy",
+	// 	"id":"1312171",
+	// 	"season":2,
+	// 	"delay":1,
+	// 	"download":"https://rarbg.to/torrents.php?search=1080p+umbrella+academy"
+	// }
 	{
-		"title":"Wizards",
-		"id":"7736558",
+		"title":"Animaniacs",
+		"id":"6951546",
 		"season":1,
 		"delay":1,
-		"download":"https://rarbg.to/torrents.php?search=1080p+wizards"
+		"download":"https://rarbg.to/torrents.php?search=1080p+hulu+animaniacs"
 	},
 	{
-		"title":"Tiny Creatures",
-		"id":"12759334",
+		"title":"Blood of Zeus",
+		"id":"10009170",
 		"season":1,
 		"delay":1,
-		"download":"https://rarbg.to/torrents.php?search=1080p+tiny+creatures"
-	},
-	{
-		"title":"The Umbrella Academy",
-		"id":"1312171",
-		"season":2,
-		"delay":1,
-		"download":"https://rarbg.to/torrents.php?search=1080p+umbrella+academy"
+		"download":"https://rarbg.to/torrents.php?search=1080p+blood+zeus"
 	}
 ]
 

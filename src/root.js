@@ -24,7 +24,8 @@ const tv = require('./tv')(app),
   lynda = require('./lynda')(app),
   list = require('./list')(app),
   binge = require('./binge')(app),
-  manga = require('./manga')(app)
+  manga = require('./manga')(app),
+  py = require('./pinyin')(app)
   // cstm = require('./cstm')(app)
 
 router.use((req, res, next) => {
